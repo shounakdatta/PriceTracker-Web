@@ -41,7 +41,7 @@ class Navigator extends Component {
         {
           id: "Manage",
           children: [
-            { id: "Home", icon: <DashboardIcon />, active: true },
+            { id: "Dashboard", icon: <DashboardIcon />, active: true },
             { id: "Inventory", icon: <ListIcon /> }
           ]
         },
@@ -131,7 +131,7 @@ class Navigator extends Component {
                   primary: classes.itemPrimary
                 }}
               >
-                Dashboard
+                Home
               </ListItemText>
             </ListItemView>
             {categories.map(({ id, children }) => (

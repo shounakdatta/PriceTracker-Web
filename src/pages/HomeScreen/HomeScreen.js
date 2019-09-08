@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import withStyles from "@material-ui/core/styles/withStyles";
 import { PageWrapper, Snackbar } from "../../components";
+import { getLastMonthPricesForAllProducts } from "../../services/ProductService";
 import { styles } from "./HomeStyles";
 
 class Home extends Component {
@@ -13,6 +14,10 @@ class Home extends Component {
       snackbarOpen: false,
       snackbarText: ""
     };
+  }
+
+  componentDidMount() {
+    getLastMonthPricesForAllProducts();
   }
 
   handleSnackbarOpen = text => {
