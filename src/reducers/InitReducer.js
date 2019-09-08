@@ -25,7 +25,8 @@ export default (state = initialState, action) => {
       metadata,
       phoneNumber,
       photoURL,
-      uid: id
+      uid,
+      dbid
     } = _.get(action, "payload", {});
     newState = newState.set("userObj", {
       displayName,
@@ -34,7 +35,8 @@ export default (state = initialState, action) => {
       metadata,
       phoneNumber,
       photoURL,
-      uid: id
+      uid,
+      dbid
     });
     newState = newState.set("status", LOGGED_IN);
     return newState;
