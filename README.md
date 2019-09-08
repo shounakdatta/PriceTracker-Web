@@ -1,6 +1,6 @@
-# PriceTracker
+# Realitics
 
-Welcome to PriceTracker Web. An universal price tracking web platform for consumers. We know the name sucks. Don't worry, we will change it later :wink:.
+Welcome to Realitics. An universal price tracking web platform. This repo is the React frontend for an app that handles price fetching for products on online stores such as Amazon and Walmart. Geared for consumers, this app allows users to identify when the product is actually on sale, not when the seller tells you it is :wink:.
 
 ## Getting started
 
