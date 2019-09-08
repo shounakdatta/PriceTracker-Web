@@ -1,4 +1,4 @@
-import firebase from "../config/Fire";
+import firebase, { firestore } from "../config/Fire";
 
 export function loginUser(userObj) {
   const { email, password } = userObj;
@@ -31,6 +31,35 @@ export function createUser(userObj) {
     .auth()
     .createUserWithEmailAndPassword(email, password)
     .catch(({ code, message }) => ({ errorCode: code, message }));
+}
+
+export function createUserInDB(loginUser) {
+  return new Promise((resolve, reject) => {
+    const { uid } = loginUser;
+    const collectionRef = firestore.collection("users");
+    collectionRef
+      .where("uid", "==", uid)
+      .get()
+      .then(snap => {
+        let user = undefined;
+        let docId = undefined;
+        snap.forEach(doc => {
+          if (!!doc.data()) {
+            user = doc.data();
+            docId = doc.id;
+          }
+        });
+        if (!user) {
+          collectionRef
+            .add({
+              uid
+            })
+            .then(docRef => resolve(docRef.id))
+            .catch(({ code, message }) => reject({ errorCode: code, message }));
+        } else resolve(docId);
+      })
+      .catch(({ code, message }) => reject({ errorCode: code, message }));
+  });
 }
 
 export function updateUser(userObj) {

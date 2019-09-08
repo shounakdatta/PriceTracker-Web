@@ -12,7 +12,16 @@ import * as UserService from "../services/UserService";
 export const login = userObj => dispatch => {
   return new Promise((resolve, reject) => {
     UserService.loginUser(userObj)
-      .then(response => {
+      .then(async response => {
+        if (response.user) {
+          await UserService.createUserInDB(response.user)
+            .then(dbid => {
+              response.user.dbid = dbid;
+            })
+            .catch(error =>
+              console.log("Could not create user in database", error)
+            );
+        }
         dispatch({
           type: ON_INIT,
           payload: response.user
@@ -28,7 +37,16 @@ export const login = userObj => dispatch => {
 export const validateUser = () => dispatch => {
   return new Promise((resolve, reject) => {
     UserService.validateUser()
-      .then(user => {
+      .then(async user => {
+        if (user) {
+          await UserService.createUserInDB(user)
+            .then(dbid => {
+              user.dbid = dbid;
+            })
+            .catch(error =>
+              console.log("Could not create user in database", error)
+            );
+        }
         dispatch({
           type: ON_VALIDATE,
           payload: user
