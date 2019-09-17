@@ -1,5 +1,4 @@
 import { firestore } from "../config/Fire";
-import { getUser } from "./UserService";
 import Store from "../store";
 
 export const getLastMonthPrices = () => {
@@ -10,16 +9,25 @@ export const getLastMonthPrices = () => {
       const { products } = doc.data();
       let dateLastMonth = new Date();
       dateLastMonth.setMonth(new Date().getMonth() - 1);
+
+      if (!products) return [];
       const prodData = await Promise.all(
         products.map(async ({ product, start }) => {
           const startDate = start.toDate();
           const latestDate =
             startDate > dateLastMonth ? startDate : dateLastMonth;
           return await product
-            .collection("prices")
-            .where("date", ">=", latestDate)
             .get()
-            .then(snap => snap.docs.map(doc => doc.data()))
+            .then(async doc => {
+              return {
+                ...doc.data(),
+                prices: await doc.ref
+                  .collection("prices")
+                  .where("date", ">=", latestDate)
+                  .get()
+                  .then(snap => snap.docs.map(doc => doc.data()))
+              };
+            })
             .catch(({ code, message }) => reject({ errorCode: code, message }));
         })
       );
