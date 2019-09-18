@@ -12,7 +12,7 @@ export const getLastMonthPrices = () => {
 
       if (!products) return [];
       const prodData = await Promise.all(
-        products.map(async ({ product, start }) => {
+        products.map(async ({ product, name, start }) => {
           const startDate = start.toDate();
           const latestDate =
             startDate > dateLastMonth ? startDate : dateLastMonth;
@@ -20,7 +20,7 @@ export const getLastMonthPrices = () => {
             .get()
             .then(async doc => {
               return {
-                ...doc.data(),
+                name,
                 prices: await doc.ref
                   .collection("prices")
                   .where("date", ">=", latestDate)
