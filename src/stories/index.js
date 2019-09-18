@@ -10,7 +10,8 @@ import {
   SignUpScreen,
   ForgotPasswordScreen
 } from "../pages";
-import { PageWrapper } from "../components";
+import { PageWrapper, LineTrendChart, AddProductPanel } from "../components";
+import { allProductPrices } from "./constants";
 
 storiesOf("Welcome", module).add("to Storybook", () => (
   <Welcome showApp={linkTo("Button")} />
@@ -26,4 +27,8 @@ storiesOf("Login", module)
 storiesOf("Home", module)
   .addDecorator(Store)
   .add("Page Wrapper", () => <PageWrapper />)
-  .add("Home Screen", () => <HomeScreen />);
+  .add("Home Screen", () => <HomeScreen />)
+  .add("Line Chart", () => <LineTrendChart data={allProductPrices} />)
+  .add("Add Product Panel", () => (
+    <AddProductPanel onAdd={url => console.log(url)} />
+  ));
