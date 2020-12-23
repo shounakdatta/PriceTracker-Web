@@ -3,8 +3,8 @@ import Store from "../store";
 
 export const getLastMonthPrices = () => {
   return new Promise((resolve, reject) => {
-    const { dbid } = Store.getState().UserStore.toJS().userObj;
-    const userRef = firestore.doc(`users/${dbid}`);
+    const { uid } = Store.getState().UserStore.toJS().userObj;
+    const userRef = firestore.doc(`users/${uid}`);
     userRef.get().then(async doc => {
       const { products } = doc.data();
       let dateLastMonth = new Date();

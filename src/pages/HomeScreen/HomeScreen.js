@@ -12,7 +12,6 @@ import {
 } from "../../components";
 import { fetchLastMonthPrices } from "../../actions/ProductActions";
 import { styles } from "./HomeStyles";
-import { HomeScreen } from "..";
 
 class Home extends Component {
   constructor() {
